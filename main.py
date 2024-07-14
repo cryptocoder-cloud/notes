@@ -30,36 +30,37 @@ def main():
     '''
     Функция для основного меню программы.
     '''
-    clear_console()
-    print('''Выбирете действие:
-1. Добавить заметку
-2. Поиск заметок
-3. Список всех заметок
-
-4. Выйти
-''')
-
     while True:
-        try:
-            answer = int(input('>>>'))
-            if answer < 1 or answer > 4:
-                raise ValueError
-            break  # Выход из цикла при корректном вводе
-        except ValueError:
-            print('Укажите правильное значение.')
+        clear_console()
+        print('''Выбирете действие:
+    1. Добавить заметку
+    2. Поиск заметок
+    3. Список всех заметок
 
-    function_dict = {
-        1: add_note,
-        2: search_notes,
-        3: find_all_notes,
-        4: close_script,
-    }
+    4. Выйти
+    ''')
 
-    choose_function = function_dict.get(answer)
-    if choose_function:
-        choose_function()
-    else:
-        print('Неправильный выбор. Повторите попытку.')
+        while True:
+            try:
+                answer = int(input('>>>'))
+                if answer < 1 or answer > 4:
+                    raise ValueError
+                break  # Выход из цикла при корректном вводе
+            except ValueError:
+                print('Укажите правильное значение.')
+
+        function_dict = {
+            1: add_note,
+            2: search_notes,
+            3: find_all_notes,
+            4: close_script,
+        }
+
+        choose_function = function_dict.get(answer)
+        if choose_function:
+            choose_function()
+        else:
+            print('Неправильный выбор. Повторите попытку.')
 
 
 def add_note():
@@ -70,11 +71,8 @@ def add_note():
     title = input('Укажите заголовок: ')
     text = input('Укажите содержание заметки:\n')
     if not title or not text:
-        return main()
-
+        return
     print(manager.add_note(title, text))
-
-    return main()
 
 
 def search_notes():
@@ -93,7 +91,7 @@ def search_notes():
         while True:
             number_notes = input('\nУкажите номер заметки для просмотра содержания, 0 для выхода в меню\n>>>')
             if number_notes == '0':
-                return main()
+                return
 
             try:
                 number = int(number_notes)
@@ -103,17 +101,16 @@ def search_notes():
                     print(text[0])
                 except TypeError:
                     print('Неправильный выбор. Повторите попытку.')
-                    return main()
+                    return
 
                 answer = input('\n1. Удалить заметку\n2. Вернуться в меню\n>>>')
                 if answer == '1':
                     manager.delete_note(number)
-                return main()
+                return
             except ValueError:
                 print('Укажите правильное значение.')
     else:
         input('По данному ключевому слову заметок не найдено.\nНажмите любую клавишу для продолжения...')
-        return main()
 
 
 def find_all_notes():
@@ -129,7 +126,7 @@ def find_all_notes():
     while True:
         number_notes = input('\nУкажите номер заметки для просмотра содержания, 0 для выхода в меню\n>>>')
         if number_notes == '0':
-            return main()
+            return
 
         try:
             number = int(number_notes)
@@ -139,7 +136,7 @@ def find_all_notes():
                 print(text[0])
             except TypeError:
                 print('Неправильный выбор. Повторите попытку.')
-                return main()
+                return
 
             while True:
                 answer = input('\n1. Удалить заметку\n2. Вернуться в меню\n>>>')
@@ -150,10 +147,9 @@ def find_all_notes():
 
             if answer == '1':
                 manager.delete_note(number)
-            return main()
+            return
         except ValueError:
             print('Укажите правильное значение.')
-            return main()
 
 
 if __name__ == "__main__":

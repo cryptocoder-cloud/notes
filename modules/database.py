@@ -67,7 +67,7 @@ class Manager:
 
     def search_notes(self, keyword):
         '''
-        Метод для удаления заметки по её ID.
+        Метод для поиска заметки по её ID.
         '''
         self.cursor.execute("SELECT id, title FROM notes WHERE text LIKE ?", ('%'+keyword+'%',))
         return self.cursor.fetchall()
